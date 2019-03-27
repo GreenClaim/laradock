@@ -845,7 +845,7 @@ RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
 USER root
 
 RUN apt-get update -yqq \
-    && apt-get -yqq install nasm 
+    && apt-get -yqq install nasm
 
 ###########################################################################
 # Dusk Dependencies:
@@ -904,6 +904,24 @@ RUN if [ ${INSTALL_MYSQL_CLIENT} = true ]; then \
     apt-get update -yqq && \
     apt-get -y install mysql-client \
 ;fi
+
+###########################################################################
+# WKHTMLTOPDF:
+###########################################################################
+
+RUN apt-get -y install wkhtmltopdf xvfb abiword pdftk
+
+###########################################################################
+# ABIWORD:
+###########################################################################
+
+RUN apt-get -y install abiword
+
+###########################################################################
+# PDFTK:
+###########################################################################
+
+RUN apt-get -y install pdftk
 
 ###########################################################################
 # Check PHP version:

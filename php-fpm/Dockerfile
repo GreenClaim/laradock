@@ -506,8 +506,8 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     docker-php-ext-enable imagick \
 
     if [ -f ${IMAGEMAGICK_POLICY} ]; then \
-        sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' ${IMAGEMAGICK_POLICY}
-    ;fi
+        sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' ${IMAGEMAGICK_POLICY} \
+    fi \
 ;fi
 
 ###########################################################################
@@ -594,7 +594,19 @@ RUN if [ ${INSTALL_YAML} = true ]; then \
 # WKHTMLTOPDF:
 ###########################################################################
 
-RUN apt-get -y install wkhtmltopdf xvfb
+RUN apt-get -y install wkhtmltopdf xvfb abiword pdftk
+
+###########################################################################
+# ABIWORD:
+###########################################################################
+
+RUN apt-get -y install abiword
+
+###########################################################################
+# PDFTK:
+###########################################################################
+
+RUN apt-get -y install pdftk
 
 ###########################################################################
 # Check PHP version:

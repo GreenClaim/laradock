@@ -503,11 +503,10 @@ ARG IMAGEMAGICK_POLICY=/etc/ImageMagick-6/policy.xml
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     apt-get install -y libmagickwand-dev imagemagick && \
     pecl install imagick && \
-    docker-php-ext-enable imagick \
-
+    docker-php-ext-enable imagick && \
     if [ -f ${IMAGEMAGICK_POLICY} ]; then \
         sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' ${IMAGEMAGICK_POLICY} \
-    fi \
+    ;fi \
 ;fi
 
 ###########################################################################
@@ -594,7 +593,7 @@ RUN if [ ${INSTALL_YAML} = true ]; then \
 # WKHTMLTOPDF:
 ###########################################################################
 
-RUN apt-get -y install wkhtmltopdf xvfb abiword pdftk
+RUN apt-get -y install wkhtmltopdf xvfb
 
 ###########################################################################
 # ABIWORD:

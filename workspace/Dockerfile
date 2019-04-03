@@ -801,9 +801,13 @@ RUN if [ ${INSTALL_PYTHON} = true ]; then \
 USER root
 
 ARG INSTALL_IMAGEMAGICK=false
+ARG IMAGEMAGICK_POLICY=/etc/ImageMagick-6/policy.xml
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
-    apt-get install -y imagemagick php-imagick \
+    apt-get install -y imagemagick php-imagick && \
+    if [ -f ${IMAGEMAGICK_POLICY} ]; then \
+        sed -i 's/<policy domain="coder" rights="none" pattern="PDF" \/>/<policy domain="coder" rights="read|write" pattern="PDF" \/>/g' ${IMAGEMAGICK_POLICY} \
+    ;fi \
 ;fi
 
 ###########################################################################
@@ -909,7 +913,7 @@ RUN if [ ${INSTALL_MYSQL_CLIENT} = true ]; then \
 # WKHTMLTOPDF:
 ###########################################################################
 
-RUN apt-get -y install wkhtmltopdf xvfb abiword pdftk
+RUN apt-get -y install wkhtmltopdf xvfb
 
 ###########################################################################
 # ABIWORD:
@@ -922,6 +926,8 @@ RUN apt-get -y install abiword
 ###########################################################################
 
 RUN apt-get -y install pdftk
+
+EXPOSE 6001
 
 ###########################################################################
 # Check PHP version:

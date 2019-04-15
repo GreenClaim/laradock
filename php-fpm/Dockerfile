@@ -87,6 +87,7 @@ ARG INSTALL_SOAP=false
 
 RUN if [ ${INSTALL_SOAP} = true ]; then \
     # Install the soap extension
+    apt-get update -yqq && \
     rm /etc/apt/preferences.d/no-debian-php && \
     apt-get -y install libxml2-dev php-soap && \
     docker-php-ext-install soap \
@@ -593,19 +594,19 @@ RUN if [ ${INSTALL_YAML} = true ]; then \
 # WKHTMLTOPDF:
 ###########################################################################
 
-RUN apt-get -y install wkhtmltopdf xvfb
+RUN apt-get update -yqq && apt-get -y install wkhtmltopdf xvfb
 
 ###########################################################################
 # ABIWORD:
 ###########################################################################
 
-RUN apt-get -y install abiword
+RUN apt-get update -yqq && apt-get -y install abiword
 
 ###########################################################################
 # PDFTK:
 ###########################################################################
 
-RUN apt-get -y install pdftk
+RUN apt-get update -yqq && apt-get -y install pdftk
 
 ###########################################################################
 # Check PHP version:
